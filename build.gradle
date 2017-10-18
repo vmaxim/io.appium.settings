@@ -1,4 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+import groovy.json.JsonSlurper
+
 buildscript {
     repositories {
         jcenter()
@@ -9,6 +12,10 @@ buildscript {
 }
 
 allprojects {
+    def packagejson = new JsonSlurper().parseText(new File("./package.json").text)
+    project.ext.set("versionName", packagejson["version"])
+    project.ext.set("versionCode", packagejson["versionCode"].toInteger())
+
     repositories {
         jcenter()
     }
